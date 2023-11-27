@@ -1,37 +1,51 @@
 // Registration.js
 import React, { useState } from "react";
 import "./style.css";
+import baseURL from "../../base_url_export";
 
 const Registration = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [userType, setUserType] = useState("Vendor"); // Default value is "Vendor"
-  const [error, setError] = useState("");
+  const [userType, setUserType] = useState("CUSTOMER");
+  const [message, setMessage] = useState("");
 
-  const handleRegistration = () => {
-    // Perform validation and registration logic
-    if (
-      firstName.trim() === "" ||
-      lastName.trim() === "" ||
-      email.trim() === "" ||
-      password.trim() === "" ||
-      userType.trim() === ""
-    ) {
-      setError("All fields are required");
-    } else {
-      // Implement your registration logic here
-      console.log("Registration successful!");
+  const url = `${baseURL}/auth/register`;
+
+  const handleRegistration = async (event) => {
+    event.preventDefault();
+    try {
+      const res = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          firstName,
+          lastName,
+          email,
+          password,
+          userType,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setMessage(data.message);
+      } else {
+        setMessage(data.message);
+      }
+    } catch (err) {
+      console.log(err);
     }
   };
 
   return (
     <div className="registration-container">
       <div className="registration-form">
-      <h2>Register New User</h2>
-        {error && <p className="error-message">{error}</p>}
-        <form >
+        <h2>Register New User</h2>
+        {message && <p className="error-message">{message}</p>}
+        <form>
           <div className="form-group">
             <label htmlFor="firstName">First Name:</label>
             <input
@@ -79,8 +93,8 @@ const Registration = () => {
               value={userType}
               onChange={(e) => setUserType(e.target.value)}
             >
-              <option value="Vendor">Vendor</option>
-              <option value="Customer">Customer</option>
+              <option value="VENDOR">Vendor</option>
+              <option value="CUSTOMER">Customer</option>
             </select>
           </div>
 

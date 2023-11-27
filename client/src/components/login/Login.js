@@ -1,32 +1,51 @@
-// Login.js
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import "./style.css";
-
+import baseURL from "../../base_url_export";
+import { Navigate } from "react-router";
+import { LoginContext } from "../../App";
 const Login = () => {
-  const [username, setUsername] = useState("");
+  const { userInfo, setUserInfo } = useContext(LoginContext);
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-
-  const handleLogin = () => {
-    if (username.trim() === "" || password.trim() === "") {
-      setError("Username and password are required");
-    } else {
-      // Implement your login logic here
-      console.log("Login successful!");
+  const url = `${baseURL}/auth/login`;
+  const handleLogin = async (event) => {
+    event.preventDefault();
+    try {
+      const res = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setError(data.message);
+      } else {
+        setUserInfo({
+          userID: data.userID,
+          loggedIn: true,
+          isVendor: data.isVendor,
+        });
+      }
+    } catch (err) {
+      console.log(err);
     }
   };
 
   return (
     <div className="login-container">
+      {userInfo.loggedIn && <Navigate to="/shop" replace={true} />}
       <h2>Login</h2>
       {error && <p className="error-message">{error}</p>}
       <form>
-        <label htmlFor="username">Username:</label>
+        <label htmlFor="email">Email:</label>
         <input
           type="text"
-          id="username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          id="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
 
         <label htmlFor="password">Password:</label>

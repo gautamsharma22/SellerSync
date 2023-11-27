@@ -20,7 +20,8 @@ body {
 .navbar {
   height: 60px;
   background-color: #fef7e5;
-  position: relative;
+  position: sticky;
+  top: 0;
 }
 
 .logo {

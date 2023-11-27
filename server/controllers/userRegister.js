@@ -1,7 +1,6 @@
 const User = require("../models/user");
 const userRegister = async (req, res) => {
   const { firstName, lastName, email, password, userType } = req.body;
-  console.log(req.body);
   const user = new User({
     firstName,
     lastName,

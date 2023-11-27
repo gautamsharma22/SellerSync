@@ -1,7 +1,6 @@
-import React from "react";
+import React,{useContext} from "react";
 import OrderCard from "./orderCard";
 import dummyOrderData from "../../order_exports";
-
 const Order = () => {
   return (
     <div>

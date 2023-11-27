@@ -1,10 +1,7 @@
-// OrderCard.js
 import React from "react";
 import "./style.css";
-
 const OrderCard = (props) => {
   const { orderId, date, totalAmount, items, status } = props;
-
   return (
     <div className={`order-card ${status}`}>
       <div className="order-details">

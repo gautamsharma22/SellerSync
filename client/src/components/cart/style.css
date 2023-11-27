@@ -1,0 +1,30 @@
+.cart-container {
+  margin: 20px;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
+
+.cart-container h2 {
+  color: #333;
+}
+
+.checkout {
+  margin-top: 20px;
+  text-align: right;
+}
+
+.checkout button {
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.checkout button:hover {
+  background-color: #45a049;
+}
