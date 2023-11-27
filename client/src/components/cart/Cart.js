@@ -23,33 +23,35 @@ const Cart = () => {
     const orderId = `${prefix}${randomNum}`;
     return orderId;
   }
-  const randomOrderId = generateRandomOrderId();
 
   const handleCheckout = async () => {
     // This functionality should be abstract and done on server side but due to less time I'm doing it client side
-    const orderCost = cartItems.reduce(
-      (total, cartItem) => total + cartItem.pPrice * cartItem.quantity,
-      0
-    );
-    const products = cartItems.map((cartItem) => cartItem._id);
+    const order = cartItems.map((cartItem) => {
+      const orderCost = cartItem.pPrice * cartItem.quantity;
+      const orderID = generateRandomOrderId();
+      return {
+        orderID,
+        productUID: cartItem._id,
+        productName: cartItem.pName,
+        sellerUID: cartItem.pSeller,
+        orderedBy: userInfo.userID,
+        orderQuantity: cartItem.quantity,
+        orderCost,
+      };
+    });
     try {
       const res = await fetch(url, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          orderCost,
-          products,
-          orderedBy: userInfo.userID,
-          orderID: randomOrderId,
-        }),
+        body: JSON.stringify({ orderItems:order }),
       });
       const data = await res.json();
       if (!res.ok) {
-        console.log("failed",data.error);
+        console.log("failed", data.error);
       } else {
-        console.log(data);
+        console.log("success",data);
       }
     } catch (err) {
       console.log("Error -> ", err);

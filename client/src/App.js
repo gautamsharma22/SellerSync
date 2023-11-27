@@ -7,6 +7,7 @@ import Orders from "./components/order/Order";
 import Login from "./components/login/Login";
 import Registration from "./components/register/Registration";
 import Cart from "./components/cart/Cart";
+import Order from "./components/vendorOrders/Order";
 const Homepage = () => <h2>You are in the Homepage</h2>;
 export const LoginContext = createContext();
 export const CartContext = createContext();
@@ -30,6 +31,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Registration />} />
               <Route path="/cart" element={<Cart />} />
+              <Route path="/vendor" element={<Order />} />
             </Routes>
           </div>
         </Router>

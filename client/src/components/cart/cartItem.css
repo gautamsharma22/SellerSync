@@ -1,13 +1,13 @@
 .cart-item {
   display: flex;
   flex-direction: row;
-  align-items: center;
-  padding: 15px;
+  align-items: baseline;
+  padding: 10px;
   margin-bottom: 0.8em;
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
-  white-space: nowrap; 
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -15,7 +15,8 @@
 .item-details {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  align-items: baseline;
+justify-content: flex-start;
   flex-grow: 1;
   overflow: hidden;
 }
@@ -27,10 +28,10 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
+.item-no,
 .item-quantity,
 .item-price {
-  font-size: 16px;
+  font-size: 1rem;
   color: #555;
   margin-right: 1em;
   white-space: nowrap;
@@ -38,11 +39,11 @@
 
 .item-actions {
   display: flex;
-  align-items: center;
+  align-items: baseline;
 }
 
 .add-button {
-  background-color: #5cb85c; 
+  background-color: #5cb85c;
   color: #fff;
   border: none;
   padding: 8px 15px;

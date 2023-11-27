@@ -6,9 +6,7 @@ const CartItem = ({ id, name, price, onRemove, quantity, indx }) => {
   const onAddItem = (pID) => {
     setCartItems((prevCart) => {
       return prevCart.map((item) =>
-        item.pID === pID
-          ? { ...item, quantity: item.quantity + 1 }
-          : item
+        item.pID === pID ? { ...item, quantity: item.quantity + 1 } : item
       );
     });
   };
@@ -17,10 +15,13 @@ const CartItem = ({ id, name, price, onRemove, quantity, indx }) => {
       <div className="item-details">
         <div className="item-no">{indx} )</div>
         <div className="item-name">{name}</div>
-        <div className="item-price">₹ {price}</div>
       </div>
       <div className="item-actions">
-        <div className="item-quantity">Quantity: {quantity}</div>
+      {window.innerWidth > 600 && (
+          <div className="item-quantity">Quantity: </div>
+        )}
+        <div className="item-quantity">{quantity}</div>
+        <div className="item-price">₹ {(price * quantity).toFixed(2)}</div>
         <button className="remove-button" onClick={() => onRemove(id)}>
           -
         </button>

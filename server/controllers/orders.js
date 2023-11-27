@@ -1,24 +1,27 @@
 const Order = require("../models/order");
 const createOrder = async (req, res) => {
-  const { products, orderedBy, orderCost, orderID } = req.body;
-  const order = new Order({
-    orderID,
-    products,
-    orderedBy,
-    orderCost,
-  });
   try {
-    const result = await order.save();
-    if (result) {
-      console.log(result);
+    const { orderItems } = req.body;
+    console.log(orderItems);
+    const orderPromises = orderItems.map(async (item) => {
+      const order = new Order({ ...item });
+      return order.save();
+    });
+    const results = await Promise.all(orderPromises);
+
+    if (results.every((result) => result)) {
       res.status(201).json({
-        message: "Order Placed Successfully",
+        message: "Orders Placed Successfully",
+      });
+    } else {
+      res.status(500).json({
+        message: "Error Placing Orders: Some orders failed to save",
+        error: error,
       });
     }
   } catch (error) {
-    console.error("Error Placing Order:", error);
     res.status(500).json({
-      message: "Error Placing Order : ",
+      message: "Error Placing Orders",
       error: error,
     });
   }
@@ -33,27 +36,47 @@ const viewOrders = async (req, res) => {
     } catch (error) {
       res.status(500).json({
         message: "Error fetching Orders",
+        error: error,
       });
     }
   } else {
     return res.status(400).json({
-      message: "Invalid Vendor ID",
+      error: "Invalid User ID",
+    });
+  }
+};
+
+const viewVendorOrders = async (req, res) => {
+  const { vendorID } = req.body;
+  if (vendorID) {
+    try {
+      const orders = await Order.find({ sellerUID:vendorID });
+      res.status(200).json(orders);
+    } catch (error) {
+      res.status(500).json({
+        message: "Error fetching Orders",
+        error: error,
+      });
+    }
+  } else {
+    return res.status(400).json({
+      error: "Invalid Vendor ID",
     });
   }
 };
 
 const updateOrder = async (req, res) => {
-  const { orderID, mode } = req.body;
-  const newOrderState = mode;
+  const { orderID, orderStatus } = req.body;
   try {
     const resp = await Order.findOneAndUpdate(
       { _id: orderID },
-      { orderStatus: newOrderState }
+      { orderStatus: orderStatus }
     );
 
     if (!resp) {
       return res.status(500).json({
         message: "Error Proccessing Order",
+        error: error,
       });
     }
     return res.status(200).json({
@@ -72,6 +95,7 @@ module.exports = {
   createOrder,
   viewOrders,
   updateOrder,
+  viewVendorOrders,
 };
 
 // Pending :: Get objectID of User from frontend on login

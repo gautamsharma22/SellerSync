@@ -1,0 +1,100 @@
+/* OrderCard.css */
+
+.vendor-order-card {
+  flex-direction: column;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin: 10px;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+.vendor-order-card.pending {
+  background-color: #ffecb3;
+}
+
+.vendor-order-card.rejected {
+  background-color: #ffd3d3;
+}
+
+.vendor-order-card.fulfilled {
+  background-color: #d3ffd3; 
+}
+
+.vendor-order-details {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  width: 100%;
+  align-items: baseline;
+}
+.vendor-order-buttons {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.vendor-order-id,
+.vendor-order-name,
+.vendor-order-date,
+.vendor-order-total {
+  margin: 0;
+  padding: 0;
+}
+
+.vendor-order-status {
+  font-weight: bold;
+  margin: 0;
+  padding: 0;
+  font-size: large;
+}
+
+.vendor-order-status.pending {
+  color: orange;
+}
+
+.vendor-order-status.rejected {
+  color: red;
+}
+
+.vendor-order-status.fulfilled {
+  color: green;
+}
+
+.vendor-accept-button,
+.vendor-reject-button {
+  padding: 8px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 16px;
+  margin-left: 10px;
+}
+
+.vendor-accept-button {
+  background-color: #4caf50;
+  color: #fff;
+}
+
+.vendor-reject-button {
+  background-color: #f44336;
+  color: #fff;
+}
+.vendor-reject-button:hover {
+  background-color: rgb(244, 71, 71);
+  color: white;
+}
+@media (max-width: 600px) {
+  .vendor-order-details {
+    flex-direction: column;
+  }
+  .vendor-accept-button,
+  .vendor-reject-button {
+    width: 50%;
+  }
+  .vendor-order-id {
+    display: none;
+  }
+  .vendor-order-buttons {
+    width: 100%;
+  }
+}

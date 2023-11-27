@@ -1,19 +1,19 @@
 import React, { useContext, useState, useEffect } from "react";
-import OrderCard from "./orderCard";
 import baseurl from "../../base_url_export";
 import { LoginContext } from "../../App";
-const Order = () => {
+import Tabs from "./Tabs";
+const VendorOrders = () => {
   const { userInfo } = useContext(LoginContext);
   const [orderHistory, setOrderHistory] = useState([]);
-  const url = `${baseurl}/order`;
-  async function getOrderHistory() {
+  const url = `${baseurl}/order/vendor`;
+  async function getOrders() {
     try {
       const res = await fetch(url, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ orderedBy: userInfo.userID }),
+        body: JSON.stringify({ vendorID: userInfo.userID }),
       });
       const data = await res.json();
       if (!res.ok) {
@@ -26,19 +26,13 @@ const Order = () => {
     }
   }
   useEffect(() => {
-    getOrderHistory();
+    getOrders();
   }, [userInfo.userID]);
   return (
-    <div>
-      {orderHistory && orderHistory.length > 0 ? (
-        orderHistory.map((order) => (
-          <OrderCard key={order.orderID} {...order} />
-        ))
-      ) : (
-        <p>No orders found.</p>
-      )}
-    </div>
+    <>
+      <Tabs orders={orderHistory} setOrderHistory={setOrderHistory} />
+    </>
   );
 };
 
-export default Order;
+export default VendorOrders;

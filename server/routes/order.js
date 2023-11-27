@@ -3,12 +3,16 @@ const {
   createOrder,
   viewOrders,
   updateOrder,
+  viewVendorOrders,
 } = require("../controllers/orders");
 
 const router = express.Router();
 
-// View all Orders
-router.get("/", viewOrders);
+// View all Sent Orders {for Users}
+router.post("/", viewOrders);
+
+// View all Recieved Orders {for Vendors}
+router.post("/vendor", viewVendorOrders);
 
 // Create Order
 router.post("/create", createOrder);

@@ -4,15 +4,18 @@ const order = new mongoose.Schema({
     type: String,
     required: true,
   },
-  products: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Product",
-    },
-  ],
+  productName: {
+    type: String,
+    required: true,
+  },
   orderedAt: {
     type: Date,
     default: () => new Date(),
+    required: true,
+  },
+  productUID: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Product",
     required: true,
   },
   orderedBy: {
@@ -20,9 +23,19 @@ const order = new mongoose.Schema({
     ref: "User",
     required: true,
   },
+  sellerUID: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
   orderStatus: {
-    type: Boolean,
-    default: false,
+    type: String,
+    required: true,
+    default:"pending",
+  },
+  orderQuantity: {
+    type: Number,
+    required: true,
   },
   orderCost: {
     type: Number,

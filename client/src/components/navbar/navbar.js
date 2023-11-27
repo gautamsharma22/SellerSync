@@ -14,7 +14,7 @@ const Navbar = () => {
   };
   const handleLogout = () => {
     setUserInfo({
-      userID:"",
+      userID: "",
       loggedIn: false,
       isVendor: false,
     });
@@ -35,25 +35,39 @@ const Navbar = () => {
             <li>
               <NavLink to="/">Home</NavLink>
             </li>
-            <li>
-              <NavLink to="/shop">Shop</NavLink>
-            </li>
-            <li>
-              <NavLink to="/orders">Your Orders</NavLink>
-            </li>
-            {userInfo.loggedIn && (
+            {!userInfo.isVendor && userInfo.loggedIn && (
+              <li>
+                <NavLink to="/shop">Shop</NavLink>
+              </li>
+            )}
+            {!userInfo.isVendor && userInfo.loggedIn && (
+              <li>
+                <NavLink to="/orders">Your Orders</NavLink>
+              </li>
+            )}
+            {!userInfo.isVendor && userInfo.loggedIn && (
               <li>
                 <NavLink to="/cart">
                   Cart{cartItems.length > 0 && "(" + cartItems.length + ")"}
                 </NavLink>
               </li>
             )}
-            {userInfo.loggedIn && <li onClick={handleLogout}>Logout</li>}
             {!userInfo.loggedIn && (
               <li>
                 <NavLink to="/login">Login</NavLink>
               </li>
             )}
+            {!userInfo.loggedIn && (
+              <li>
+                <NavLink to="/register">Register</NavLink>
+              </li>
+            )}
+            {userInfo.isVendor && (
+              <li>
+                <NavLink to="/vendor">New Orders</NavLink>
+              </li>
+            )}
+            {userInfo.loggedIn && <li onClick={handleLogout}>Logout</li>}
           </ul>
         </div>
       </div>
