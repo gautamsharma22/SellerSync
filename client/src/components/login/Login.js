@@ -36,7 +36,7 @@ const Login = () => {
 
   return (
     <div className="login-container">
-      {userInfo.loggedIn && <Navigate to="/shop" replace={true} />}
+      {userInfo.loggedIn && <Navigate to="/" replace={true} />}
       <h2>Login</h2>
       {error && <p className="error-message">{error}</p>}
       <form>

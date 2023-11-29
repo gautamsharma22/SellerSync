@@ -1,11 +1,34 @@
-import React, { useContext } from "react";
+import React, { useContext,useState, useEffect } from "react";
 import ProductCard from "../product/productCard";
-import Product from "../../product_exports";
 import { CartContext } from "../../App";
 
 import "./style.css";
+import baseURL from "../../base_url_export";
 const Shop = () => {
+  const [Product, setProduct] = useState([]);
   const { setCartItems } = useContext(CartContext);
+  const url = `${baseURL}/product`;
+  async function getProducts() {
+    try {
+      const res = await fetch(url, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        console.log(data.error);
+      } else {
+        setProduct(data);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  useEffect(() => {
+    getProducts();
+  }, []);
   function handleAddItem(product) {
     setCartItems((prevCart) => {
       const existingItem = prevCart.find((item) => item.pID === product.pID);

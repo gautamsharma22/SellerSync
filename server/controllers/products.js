@@ -14,7 +14,7 @@ const addProduct = async (req, res) => {
     if (result) {
       console.log(result);
       res.status(201).json({
-        message: "Product Added Placed Successfully",
+        message: "Product Added Successfully",
       });
     }
   } catch (error) {

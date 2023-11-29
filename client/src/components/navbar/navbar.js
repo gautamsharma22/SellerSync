@@ -20,54 +20,63 @@ const Navbar = () => {
     });
     navigate("/", { replace: true });
   };
+  const { isVendor, loggedIn } = userInfo;
 
   return (
     <nav className="navbar">
       <div className="container">
         <div className="logo">
-          <h1>Logo</h1>
+          <h1>SellerSync</h1>
         </div>
         <div className="menu-icon" onClick={handleShowNavbar}>
-          <h1>Button</h1>
+          <h1>{!showNavbar ? "Menu" : "Close"}</h1>
         </div>
-        <div className={`nav-elements  ${showNavbar && "active"}`}>
+        <div
+          className={`nav-elements  ${showNavbar && "active"}`}
+          onClick={handleShowNavbar}
+        >
           <ul>
             <li>
               <NavLink to="/">Home</NavLink>
             </li>
-            {!userInfo.isVendor && userInfo.loggedIn && (
+            {loggedIn && !isVendor && (
               <li>
                 <NavLink to="/shop">Shop</NavLink>
               </li>
             )}
-            {!userInfo.isVendor && userInfo.loggedIn && (
+            {loggedIn && !isVendor &&  (
               <li>
                 <NavLink to="/orders">Your Orders</NavLink>
               </li>
             )}
-            {!userInfo.isVendor && userInfo.loggedIn && (
+            {loggedIn && !isVendor && (
               <li>
                 <NavLink to="/cart">
                   Cart{cartItems.length > 0 && "(" + cartItems.length + ")"}
                 </NavLink>
               </li>
             )}
-            {!userInfo.loggedIn && (
+            {!loggedIn && (
               <li>
                 <NavLink to="/login">Login</NavLink>
               </li>
             )}
-            {!userInfo.loggedIn && (
+            {!loggedIn && (
               <li>
                 <NavLink to="/register">Register</NavLink>
               </li>
             )}
-            {userInfo.isVendor && (
+            {loggedIn && isVendor && (
+              <li>
+                <NavLink to="/add">Add Product</NavLink>
+              </li>
+            )}
+            {loggedIn && isVendor && (
               <li>
                 <NavLink to="/vendor">New Orders</NavLink>
               </li>
             )}
-            {userInfo.loggedIn && <li onClick={handleLogout}>Logout</li>}
+            {loggedIn && <li onClick={handleLogout}>Logout</li>}
           </ul>
         </div>
       </div>

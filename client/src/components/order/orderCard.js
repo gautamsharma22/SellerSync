@@ -11,7 +11,7 @@ const OrderCard = (props) => {
           <h4 className="order-name">{productName}</h4>
           <p className="order-date">Date: {formattedDate}</p>
           <p className="order-date">Time: {formattedTime}</p>
-          <p className="order-total">Total ₹ {orderCost}</p>
+          <p className="order-total">₹ {(orderCost).toFixed(2)}</p>
       </div>
       <button className={`order-status ${orderStatus}`}>
         {orderStatus.charAt(0).toUpperCase() + orderStatus.slice(1)}

@@ -41,8 +41,8 @@ const Registration = () => {
   };
 
   return (
-    <div className="registration-container">
-      <div className="registration-form">
+    <div className="form-container">
+      <div className="actual-form">
         <h2>Register New User</h2>
         {message && <p className="error-message">{message}</p>}
         <form>
